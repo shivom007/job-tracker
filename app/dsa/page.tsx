@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-
+import { JobApplication } from "@/lib/types"
 // Sample data for testing
 const sampleJobs = [
   { company: "Google", role: "SDE Intern", appliedDate: "2025-04-01", status: "Applied" },
@@ -64,20 +64,37 @@ function findDuplicateApplications(jobs: any[]) {
 export default function DSAPage() {
   const [activeTab, setActiveTab] = useState("problem1")
   const [result, setResult] = useState<any>(null)
-  const [jobs, setJobs] = useState<any>(null)
+  const [applications, setApplications] = useState<JobApplication[]>([])
+
+  async function fetchApplications() {
+    try {
+      const response = await fetch("/api/applications")
+      if (!response.ok) {
+        throw new Error("Failed to fetch applications")
+      }
+      const data = await response.json()
+      setApplications(data || sampleJobs)
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load job applications.",
+        variant: "destructive",
+      })
+    }
+  }
   
   const runProblem1 = () => {
-    const sorted = sortJobsByDate(sampleJobs)
+    const sorted = sortJobsByDate(applications)
     setResult(sorted)
   }
 
   const runProblem2 = () => {
-    const frequency = countStatusFrequency(sampleJobs)
+    const frequency = countStatusFrequency(applications)
     setResult(frequency)
   }
 
   const runProblem3 = () => {
-    const duplicates = findDuplicateApplications(sampleJobs)
+    const duplicates = findDuplicateApplications(applications)
     setResult(duplicates)
   }
 
