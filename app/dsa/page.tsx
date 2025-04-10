@@ -82,6 +82,9 @@ export default function DSAPage() {
       })
     }
   }
+  useEffect(() => {
+    fetchApplications()
+  },[])
   
   const runProblem1 = () => {
     const sorted = sortJobsByDate(applications)
