@@ -73,7 +73,8 @@ export default function DSAPage() {
         throw new Error("Failed to fetch applications")
       }
       const data = await response.json()
-      setApplications(data || sampleJobs)
+      const { _id, createdAt, updatedAt, ...cleanedData } = data
+      setApplications(cleanedData || sampleJobs)
     } catch (error) {
       toast({
         title: "Error",
@@ -121,7 +122,7 @@ export default function DSAPage() {
             <CardContent>
               <div className="space-y-4">
                 <div className="bg-muted p-4 rounded-md overflow-auto max-h-60">
-                  <pre className="text-sm">{JSON.stringify(sampleJobs, null, 2)}</pre>
+                  <pre className="text-sm">{JSON.stringify(applications, null, 2)}</pre>
                 </div>
 
                 <Button onClick={runProblem1}>Run Solution</Button>
