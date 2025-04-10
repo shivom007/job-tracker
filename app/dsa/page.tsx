@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -64,7 +64,8 @@ function findDuplicateApplications(jobs: any[]) {
 export default function DSAPage() {
   const [activeTab, setActiveTab] = useState("problem1")
   const [result, setResult] = useState<any>(null)
-
+  const [jobs, setJobs] = useState<any>(null)
+  
   const runProblem1 = () => {
     const sorted = sortJobsByDate(sampleJobs)
     setResult(sorted)
