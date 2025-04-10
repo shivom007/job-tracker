@@ -136,6 +136,7 @@ export default function JobApplicationList() {
       setApplications((prev) => prev.filter((app) => app._id !== id))
 
       toast({
+        variant: "destructive",
         title: "Application Deleted",
         description: "Job application has been removed.",
       })
